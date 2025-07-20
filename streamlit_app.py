@@ -9,7 +9,15 @@ st.title("Disease Readmission Prediction 🚑")
 st.markdown("Predict whether a patient will be readmitted within 30 days.")
 
 # Load model
-model = joblib.load("model/readmission_model.pkl")
+import cloudpickle
+
+with open("model/readmission_model.pkl", "rb") as f:
+    data = cloudpickle.load(f)
+
+model = data['model']
+features = data['features']
+
+
 
 # Input features
 def user_input():

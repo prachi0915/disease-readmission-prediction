@@ -42,6 +42,7 @@ models = [
 
 best_model = None
 best_score = 0
+
 best_model_name = ""
 
 # Evaluate each model
@@ -61,7 +62,11 @@ for model in models:
 print(f"\n✅ Best Model: {best_model_name} with F1 Score: {best_score:.4f}")
 
 # Save the best model
-joblib.dump({
-    'model': best_model,
-    'features': X_train.columns.tolist()
-}, "model/readmission_model.pkl")
+
+import cloudpickle
+
+with open("model/readmission_model.pkl", "wb") as f:
+    cloudpickle.dump({
+        'model': best_model,
+        'features': X_train.columns.tolist()
+    }, f)
