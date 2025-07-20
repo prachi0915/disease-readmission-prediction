@@ -40,6 +40,8 @@ model.fit(X_train, y_train)
 # Evaluation
 y_pred = model.predict(X_test)
 print(classification_report(y_test, y_pred))
+joblib.dump({
+    'model': model,
+    'features': X_train.columns.tolist()
+}, "model/readmission_model.pkl")
 
-# Save model
-joblib.dump(model, "model/readmission_model.pkl")

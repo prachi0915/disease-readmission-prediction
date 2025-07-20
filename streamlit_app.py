@@ -40,11 +40,23 @@ def user_input():
 
 df = user_input()
 
-# Dummy encoding (must match training process!)
-label_encoders = {}
+
+# Load model and expected feature names
+model_bundle = joblib.load("model/readmission_model.pkl")
+model = model_bundle['model']
+expected_features = model_bundle['features']
+
+# After encoding user input
 for col in df.columns:
     le = LabelEncoder()
     df[col] = le.fit_transform(df[col].astype(str))
+
+# Reindex to expected columns
+df = df.reindex(columns=expected_features, fill_value=0)
+
+
+
+
 
 # Predict
 if st.button("Predict"):
